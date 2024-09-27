@@ -1,0 +1,150 @@
+(3.3)
+#include<iostream>
+using namespace std;
+
+class Node
+{
+    public:
+        char data;
+        Node *next;
+};
+
+// Traversal function
+void ListTraversal(Node* n)
+{
+    while (n != nullptr)
+    {
+        cout << n->data << " ";  // Print the node data
+        n = n->next;             // Move it to the next
+    }
+    cout << endl;  // Print new line after traversal
+}
+
+// Insertion at the head of the list
+void InsAtHead(Node** head, char new_data)
+{
+    Node* new_node = new Node(); // Create a node for insert for head
+    new_node->data = new_data;   // Set data
+    new_node->next = (*head);    // Link the new node to the current head
+    (*head) = new_node;          // Move head to point to the new node
+}
+
+// Insertion at any position in the list
+void InsAtPos(Node* prev_node, char new_data)
+{
+    if (prev_node == nullptr)
+    {
+        cout << "Previous node cannot be null." << endl;
+        return;
+    }
+    Node* new_node = new Node();  // Create a node for any postion
+    new_node->data = new_data;    // Set data
+    new_node->next = prev_node->next;  // Link new node to the nexx
+    prev_node->next = new_node;   // Link it to the new node
+}
+
+// Insertion at the end of the nodes in the list
+void InsAtEnd(Node** head, char new_data)
+{
+    Node* new_node = new Node();  // Create a node at the end
+    new_node->data = new_data;    // Set data
+    new_node->next = nullptr;     // This is now the final node
+
+    // If empty, set the head to the new node
+    if (*head == nullptr)
+    {
+        *head = new_node;
+        return;
+    }
+
+    // Else, go back to the previous/last node
+    Node* last = *head;
+    while (last->next != nullptr)
+    {
+        last = last->next;
+    }
+
+    last->next = new_node;  // Link the last node to the new node
+}
+
+// Deletion of the nodes
+void deleno(Node** head, char key)
+{
+    Node* temp = *head;
+    Node* prev = nullptr;
+
+
+    if (temp != nullptr && temp->data == key)
+    {
+        *head = temp->next; // Change the head to the next node
+        delete temp;        // delete the old head
+        return;
+    }
+
+    // Search for the key in the list
+    while (temp != nullptr && temp->data != key)
+    {
+        prev = temp;
+        temp = temp->next;
+    }
+
+    // If key is not present in the list
+    if (temp == nullptr)
+    {
+        cout << "Key not found." << endl;
+        return;
+    }
+
+    // Unlink the node from the list and free memory
+    prev->next = temp->next;
+    delete temp;
+}
+
+int main()
+{
+    // Initialize an empty linked list
+    Node* head = nullptr;
+
+    // Step 1: Insert data into the list (C -> P -> E -> 0 -> 1 -> 0)
+    InsAtEnd(&head, 'C');
+    InsAtEnd(&head, 'P');
+    InsAtEnd(&head, 'E');
+    InsAtEnd(&head, '1');
+    InsAtEnd(&head, '0');
+    InsAtEnd(&head, '1');
+
+    // Task a final ouput is CPE101
+    cout << "Task a (Initial traversal of the list): ";
+    ListTraversal(head);
+
+    // Task b final ouput is GCPE101
+    InsAtHead(&head, 'G');
+    cout << "Task b (Insert 'G' at the start): ";
+    ListTraversal(head);
+
+    // Task c final ouput is GCPEE101
+    Node* temp = head;
+    while (temp != nullptr && temp->data != 'P')  // Find node with 'P'
+    {
+        temp = temp->next;
+    }
+    InsAtPos(temp, 'E');  // Insert 'E' after 'P'
+    cout << "Task c (Insert 'E' after 'P'): ";
+    ListTraversal(head);
+
+    // Task d final ouput is GPEE101
+    deleno(&head, 'C');
+    cout << "Task d (Delete node with 'C'): ";
+    ListTraversal(head);
+
+    // Task e final ouput is GEE101
+    deleno(&head, 'P');
+    cout << "Task e (Delete node with 'P'): ";
+    ListTraversal(head);
+
+    // Task f final ouput is GEE101
+    cout << "Task f (Final list traversal): ";
+    ListTraversal(head);
+
+    return 0;
+}

@@ -1,0 +1,83 @@
+ Supplementary Activity
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Node {
+public:
+    string song;
+    Node* next;
+    Node(string s) : song(s), next(nullptr) {}
+};
+
+class Music_opm_list {
+    Node* head = nullptr;
+public:
+    void AddSong(string s) {
+        Node* new_node = new Node(s);
+        if (!head) {
+            head = new_node;
+            new_node->next = head;
+        } else {
+            Node* temp = head;
+            while (temp->next != head) temp = temp->next;
+            temp->next = new_node;
+            new_node->next = head;
+        }
+    }
+
+    void RemoveSong(string s) {
+        if (!head) return;
+        Node* temp = head, *prev = nullptr;
+        if (head->song == s) {
+            if (head->next == head) { delete head; head = nullptr; }
+            else {
+                while (temp->next != head) temp = temp->next;
+                temp->next = head->next;
+                delete head; head = temp->next;
+            }
+            return;
+        }
+        do {
+            prev = temp; temp = temp->next;
+        } while (temp != head && temp->song != s);
+        if (temp != head) { prev->next = temp->next; delete temp; }
+    }
+
+    void dispsong() {
+        if (!head) return;
+        Node* temp = head;
+        do {
+            cout << "• " << temp->song << endl;
+            temp = temp->next;
+        } while (temp != head);
+    }
+};
+
+int main() {
+    Music_opm_list playlist;
+
+    // Create OPM song playlist
+    cout << "Playlist: my Favorite OPM Songs\n";
+    playlist.AddSong("Dahan Dahan");
+    playlist.AddSong("Bawat Piyesa");
+    playlist.AddSong("Sino");
+    playlist.dispsong();
+
+    // Add a song to the playlist
+    cout << "\nAdding song: Pwede Ba\n";
+    playlist.AddSong("Pwede Ba");
+    playlist.dispsong();
+    
+    // Playing the song in loop 
+    cout << "\nNow playing in loop: \n";
+    playlist.dispsong();
+
+    // Remove the song "Pwede Ba"
+    cout << "\nRemoving song: Pwede Ba\n";
+    playlist.RemoveSong("Pwede Ba");
+    playlist.dispsong();
+
+    return 0;
+}

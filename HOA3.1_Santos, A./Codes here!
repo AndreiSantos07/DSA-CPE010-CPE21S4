@@ -1,1 +1,163 @@
+(3.2)
+#include <iostream>
+using namespace std;
 
+class Node {
+    public:
+        char data;
+        Node *next;
+};
+
+void ListTraversal(Node *n) 
+{
+    // while n is not equal to 
+    while (n != nullptr) 
+    {
+        // Print n
+        cout << n->data << " ";
+        // Go to next node n  := next
+        n = n->next;
+    }
+    // print
+    cout << endl;
+}
+
+void InsAtHead(Node *&head, char data) 
+{
+    // Allocate memory for the new node
+    Node *newNode = new Node;
+    
+    // Put our data into the new node by applying it to the new data
+    newNode->data = data;
+    
+    // Set Next of the new node to point to the previous Head
+    newNode->next = head;
+     
+    // Change the head now to make it the point to the new node
+    head = newNode;
+}
+
+    // declares void for the any part insertion
+void InsAnyPart(Node *&head, char data, int position) 
+{
+    Node *newNode = new Node;
+    newNode->data = data;
+    
+    // deciding what position could the any part in the output
+    if (position == 1) 
+    {
+        newNode->next = head;
+        head = newNode;
+        return;
+    }
+    
+    Node *temp = head;
+    for (int i = 1; i < position - 1 && temp != nullptr; i++) 
+    {
+        temp = temp->next;
+    }
+    
+    if (temp == nullptr) 
+    {
+        cout << "Previous node cannot be null" << endl;
+        return;
+    }
+    
+    newNode->next = temp->next;
+    temp->next = newNode;
+}
+
+    // Entering the insertion at end of the output
+void InsAtEnd(Node *&head, char data) 
+{
+    Node *newNode = new Node;
+    newNode->data = data;
+    newNode->next = nullptr;
+    
+    if (head == nullptr) 
+    {
+        head = newNode;
+        return;
+    }
+    
+    Node *temp = head;
+    while (temp->next != nullptr) 
+    {
+        temp = temp->next;
+    }
+    
+    temp->next = newNode;
+}
+
+    // now, the deletion of the chosen character
+void DelNo(Node *&head, char data) 
+{
+    if (head == nullptr) {
+        cout << "This is an Empty list" << endl;
+        return;
+    }
+    
+    if (head->data == data) 
+    {
+        Node *temp = head;
+        head = head->next;
+        delete temp;
+        return;
+    }
+    
+    Node *temp = head;
+    while (temp->next != nullptr) 
+    {
+        if (temp->next->data == data) 
+        {
+            Node *nodeToDelete = temp->next;
+            temp->next = temp->next->next;
+            delete nodeToDelete;
+            return;
+        }
+        temp = temp->next;
+    }
+    
+    cout << "The node was not found." << endl;
+}
+// here comes the main function 
+int main() 
+{
+    
+    Node *head = NULL;
+    
+    // Inserting the nodes "CPE010"
+    InsAtEnd(head, 'C');
+    InsAtEnd(head, 'P');
+    InsAtEnd(head, 'E');
+    InsAtEnd(head, '0');
+    InsAtEnd(head, '1');
+    InsAtEnd(head, '0');
+    
+    // Call the ListTraversal function to show the output
+    cout << "The Linked List: ";
+    ListTraversal(head);
+    
+    // Inserting the new node at the head of the linked list
+    InsAtHead(head, 'A');
+    
+    // Call the ListTraversal function for the new output
+    cout << "After inserting at the head in the Linked List: ";
+    ListTraversal(head);
+    
+    // Insert a new node at any part (InsAnyPart) of the linked list
+    InsAnyPart(head, 'N', 5);
+    
+    // Call the ListTraversal function again for the updated output
+    cout << "The Linked List after inserting node at any location between the head and tail: ";
+    ListTraversal(head);
+    
+    // Delete a node from the linked list, (N)
+    DelNo(head, 'N');
+    
+    // Calling the ListTraversal function, for the final output
+    cout << "After deleting a node in the Linked List: ";
+    ListTraversal(head);
+    
+    return 0;
+}

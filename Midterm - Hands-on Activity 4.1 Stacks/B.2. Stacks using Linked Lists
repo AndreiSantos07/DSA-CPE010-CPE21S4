@@ -1,23 +1,31 @@
 #include<iostream>
-class Node{
+
+class Node
+{
 public:
     int data;
     Node *next;
 };
-Node *head=NULL,*tail=NULL;
+Node *head=NULL, *tail=NULL;
 
-    void push(int newData){
+    void push(int newData)
+    {
         Node *newNode = new Node;
         newNode->data = newData;
         newNode->next = head;
 
-        if(head==NULL){
+        if(head==NULL)
+        {
             head = tail = newNode;
-        } else {
+        } 
+        else 
+        {
             newNode->next = head;
             head = newNode;
+            
         }
-}
+        
+    }
 
 int pop(){
     int tempVal;
@@ -44,19 +52,43 @@ void Top(){
     }
 }
 
+void display()
+{
+    if(head == NULL)
+    {
+        std::cout << "Now, the Stack is empty. " << std::endl;
+        return;
+    }
+    Node* temp = head;
+    std :: cout << "This is the stack elements: ";
+    while(temp != NULL)
+    {
+        std::cout << temp -> data << " ";
+        temp = temp -> next;
+    }
+    std::cout << std::endl;
+}
+
 int main(){
     push(1);
     std::cout<<"After the first PUSH top of stack is :";
     Top();
+    
     push(5);
     std::cout<<"After the second PUSH top of stack is :";
     Top();
+    
+    display();
+    
     pop();
-    std::cout<<"After the first POP operation, top of stack is:";
+    std::cout<<"After the first POP operation, top of stack is: ";
     Top();
+    
+    display();
     pop();
-    std::cout<<"After the second POP operation, top of stack :";
+    std::cout<<"After the second POP operation, top of stack: ";
     Top();
+    display();
     pop();
     return 0;
 }

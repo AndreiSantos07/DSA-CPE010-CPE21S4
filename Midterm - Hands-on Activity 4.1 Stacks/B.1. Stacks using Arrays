@@ -7,7 +7,7 @@ void push();
 void pop();
 void Top();
 bool isEmpty();
-void Display();
+void Display(); // decalre another void 
                 
 int main()
     {
@@ -28,7 +28,7 @@ int main()
                 break;
             case 4: std::cout << isEmpty() << std::endl;
                 break;
-            case 5: Display();
+            case 5: Display(); // adding this fro having to have another a case which is the display
                 break;
             default: std::cout << "Invalid Choice." << std::endl;
                 break;
@@ -73,25 +73,24 @@ void pop(){
 void Top(){
     if(isEmpty()) 
     {
-        std::cout << "Stack is Empty." << std::endl;
-        return;
+        std::cout << "Stack is Empty." << std::endl; 
+        return; 
     }
 
-    std::cout << "The element on the top of the stack is " << stack[top] <<
-std::endl;
+    std::cout << "The element on the top of the stack is " << stack[top] << std::endl;
 }
 
 void Display()
 {
-    if(isEmpty()) 
+    if(isEmpty()) // if statement, checking if the stack is empty
     {
-        std::cout << "Stack is Empty" << std::endl;
-        return;
+        std::cout << "Stack is Empty" << std::endl; // if it is empty, this will be printed
+        return; // and will return after executing the code above
     }   
     std::cout << "Stack Elements: ";
-    for(int j = 0; j <= top; j++)
+    for(int j = 0; j <= top; j++) // using for loop, it will run thorugh all the elements in the stack
         {
-            std::cout << stack[j] << " ";
-        std::cout << std::endl;
+            std::cout << stack[j] << " "; // now, it will print eadch stack, one by one with a space
+        std::cout << std::endl; // it will now move to the next time after printing all the elements
         }
 }

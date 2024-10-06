@@ -1,176 +1,118 @@
 #include <iostream>
 using namespace std;
 
-// Linked List Node Structure
-struct Node 
-{
+// creating a class for node
+class Node {
+public:
     char data;
     Node* next;
 };
 
-// Linked List Stack Class
-class Lin_Lis_Stack 
-{
-    Node* top;
+// Linked List Class
+class Lin_Lis_Stack {
+    Node* top; 
 public:
-    Lin_Lis_Stack() 
-    {
-        top = nullptr;
+    Lin_Lis_Stack() : top(nullptr) {}
+
+    // Push character onto stack
+    void push(char item) {
+        Node* newNode = new Node{item, top}; // Create new node
+        top = newNode; // Update the top as the new node
     }
 
-    void push(char item) 
-    {
-        Node* newNode = new Node();
-        if (!newNode) 
-        {
-            cout << "It is a Heap Overflow" << endl;
-            return;
-        }
-        newNode->data = item;
-        newNode->next = top;
-        top = newNode;
-    }
-
-    char pop() 
-    {
-        if (top == nullptr) 
-        {
-            cout << "The Stack is now underflow" << endl;
-            return '\0';
-        }
+    // Pop character from stack
+    char pop() {
+        if (!top) return '\0'; // Return null if stack is empty thjat is why '\0'
         Node* temp = top;
-        top = top->next;
         char popped = temp->data;
-        delete temp;
-        return popped;
+        top = top->next;
+        delete temp; // delete the temp
+        return popped; // return the pop to avoid empty
     }
 
-    bool isEmpty() 
-    {
-        return top == nullptr;
-    }
-
-    char peek() 
-    {
-        if (!isEmpty())
-            return top->data;
-        else
-            return '\0';
+    // Check if stack is empty
+    bool isEmpty() {
+        return !top;
     }
 };
 
-// Array-Stack Class
-class Arr_Stack 
-{
+// Array Stack Class
+class Arr_Stck {
     int top;
-    int capcty;
-    char* Stack_Arr;
+    int capacity;
+    char* stackArray;
 public:
-    Arr_Stack(int size) 
-    {
-        capcty = size;
-        Stack_Arr = new char[capcty];
-        top = -1;
+    Arr_Stck(int size) : capacity(size), top(-1) {
+        stackArray = new char[capacity]; // assign the memory
     }
 
-    ~Arr_Stack() 
-    {
-        delete[] Stack_Arr;
+    ~Arr_Stck() {
+        delete[] stackArray; // now, delete the memory
     }
 
-    void push(char item) 
-    {
-        if (top == capcty - 1) 
-        {
-            cout << "The Stack is now overflow" << endl;
-            return;
-        }
-        Stack_Arr[++top] = item;
+    void push(char item) {
+        if (top < capacity - 1) 
+            stackArray[++top] = item;
     }
 
-    char pop() 
-    {
-        if (top == -1) 
-        {
-            cout << "The Stack is now underflow" << endl;
-            return '\0';
-        }
-        return Stack_Arr[top--];
+    char pop() {
+        if (top >= 0) return stackArray[top--]; // Return item
+        return '\0'; // Return null if empty
     }
 
-    bool isEmpty() 
-    {
-        return top == -1;
-    }
-
-    char peek() 
-    {
-        if (isEmpty()) 
-        {
-            return '\0';
-        }
-        return Stack_Arr[top];
+    bool isEmpty() {
+        return top == -1; // Return if empty
     }
 };
 
-// Checking if the expression is balanced or not using Linked List Stack
-bool Check_Expr_Lin_Lis(string expr) 
-{
+// Function to check balanced symbols using Linked List Stack
+bool Check_Expr_Lin_Lis(string expr) {
     Lin_Lis_Stack stack;
-    for (char& ch : expr) 
-    {
-        if (ch == '(' || ch == '{' || ch == '[') 
-        {
-            stack.push(ch);
-        } else if (ch == ')' || ch == '}' || ch == ']') 
-        {
-            if (stack.isEmpty()) return false;
-            char open = stack.pop();
-            if ((ch == ')' && open != '(') || (ch == '}' && open != '{') || (ch == ']' && open != '[')) 
-            {
+    for (char ch : expr) {
+        if (ch == '(' || ch == '{' || ch == '[') stack.push(ch); // Push opening symbols
+        else if (ch == ')' || ch == '}' || ch == ']') {
+            if (stack.isEmpty() || 
+                (ch == ')' && stack.pop() != '(') ||
+                (ch == '}' && stack.pop() != '{') ||
+                (ch == ']' && stack.pop() != '[')) 
                 return false;
-            }
         }
     }
-    return stack.isEmpty();
+    return stack.isEmpty(); // Return if it is balanced
 }
 
-// Checking if the expression is balanced or not using Array Stack
-bool Check_Expr_Arr(string expr) 
-{
-    Arr_Stack stack(expr.length());
-    for (char& ch : expr) 
-    {
-        if (ch == '(' || ch == '{' || ch == '[') 
-        {
-            stack.push(ch);
-        } else if (ch == ')' || ch == '}' || ch == ']') 
-        {
-            if (stack.isEmpty()) return false;
-            char open = stack.pop();
-            if ((ch == ')' && open != '(') || (ch == '}' && open != '{') || (ch == ']' && open != '[')) 
-            {
+// Function bool to check balanced symbols using Array Stack
+bool Check_Expr_Array(string expr) {
+    Arr_Stck stack(expr.length()); // Create stack based on expression length
+    for (char ch : expr) {
+        if (ch == '(' || ch == '{' || ch == '[') stack.push(ch); // Push symbols
+        else if (ch == ')' || ch == '}' || ch == ']') {
+            if (stack.isEmpty() || 
+                (ch == ')' && stack.pop() != '(') ||
+                (ch == '}' && stack.pop() != '{') ||
+                (ch == ']' && stack.pop() != '[')) 
                 return false;
-            }
         }
     }
-    return stack.isEmpty();
+    return stack.isEmpty(); // Return if balanced
 }
 
 int main() {
-    string expr = "(A+B)+(C-D)"; // This is now the expression that will be needing to check.
+    string expr = "(A+B)+(C-D)"; // This will be the example expression that will be checked
 
-    // Checking using Linked List Stack
-    if (Check_Expr_Lin_Lis(expr))
-        cout << "For Linked List Stack: Balanced" << endl;
-    else
-        cout << "For Linked List Stack: Not Balanced" << endl;
+    // Check expression for balanced symbols using Linked List
+    if ('Check_Expr_Lin_Lis(expr)) {
+        cout << "Balanced using Linked List Stack!" << endl; // This will be printed if the expr is balanced with the use of linked list
+    } else {
+        cout << "Not Balanced using Linked List Stack." << endl; // This will be printed if the expr is not balanced with the use of linked list
+    }
 
-    // Checking using Array Stack
-    if (Check_Expr_Arr(expr))
-        cout << "For Array Stack: The expression is Balanced!" << endl;
-    else
-        cout << "For Array Stack: The expression is not Balanced. Check your error." << endl;
+    // Check expression for balanced symbols using Array
+    if (Check_Expr_Array(expr)) {
+        cout << "Balanced using Array Stack!" << endl; // This will be printed if the expr is balanced with the use of array
+    } else {
+        cout << "Not Balanced using Array Stack." << endl; // This will be printed if the expr is not balanced with the use of array
+    }
 
     return 0;
 }

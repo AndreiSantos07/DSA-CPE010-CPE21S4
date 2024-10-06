@@ -99,19 +99,20 @@ bool Check_Expr_Array(string expr) {
 
 int main() {
     string expr = "(A+B)+(C-D)"; // This will be the example expression that will be checked
+    cout << "This is the expression: " << expr << endl;
 
     // Check expression for balanced symbols using Linked List
-    if ('Check_Expr_Lin_Lis(expr)) {
-        cout << "Balanced using Linked List Stack!" << endl; // This will be printed if the expr is balanced with the use of linked list
+    if (Check_Expr_Lin_Lis(expr)) {
+        cout << "The expression is balanced using Linked List!" << endl; // This will be printed if the expr is balanced with the use of linked list
     } else {
-        cout << "Not Balanced using Linked List Stack." << endl; // This will be printed if the expr is not balanced with the use of linked list
+        cout << "The expression is not balanced using Linked List, check your error." << endl; // This will be printed if the expr is not balanced with the use of linked list
     }
 
     // Check expression for balanced symbols using Array
     if (Check_Expr_Array(expr)) {
-        cout << "Balanced using Array Stack!" << endl; // This will be printed if the expr is balanced with the use of array
+        cout << "The expression is balanced using Array!" << endl; // This will be printed if the expr is balanced with the use of array
     } else {
-        cout << "Not Balanced using Array Stack." << endl; // This will be printed if the expr is not balanced with the use of array
+        cout << "The expression is not balanced using Array, check your error." << endl; // This will be printed if the expr is not balanced with the use of array
     }
 
     return 0;

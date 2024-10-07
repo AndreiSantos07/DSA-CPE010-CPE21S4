@@ -1,0 +1,52 @@
+#include <iostream>
+#include <queue>
+#include <string>
+
+void display(std::queue<std::string> q) 
+{
+    std::queue<std::string> c = q;
+    while (!c.empty()) 
+    {
+        std::cout << c.front() << " ";
+        c.pop();
+    }
+    std::cout << "\n";
+}
+
+int main() 
+{
+    // Declare a queue for students
+    std::queue<std::string> stud;
+
+    // Array of student names
+    std::string names[] = {"Andrei", "Aaliyah", "Tiffany"};
+
+    // use for loop fr the names
+    for (int i = 0; i < 3; i++) 
+    {
+        stud.push(names[i]);
+    }
+
+    // Display the queue of names
+    std::cout << "The queue of student names: ";
+    display(stud);
+
+    // Print this to check emptiness, size, front, and back.
+    std::cout << "Queue is empty? " << stud.empty() << "\n";
+    std::cout << "Queue size: " << stud.size() << "\n";
+    std::cout << "Front of the queue: " << stud.front() << "\n";
+    std::cout << "Back of the queue: " << stud.back() << "\n";
+
+    // Popping a 1 element (student) in the Array
+    std::cout << "a.pop() : ";
+    stud.pop();
+    display(stud);
+    
+    stud.push("Alexis");
+    
+    // Remove one student (front of the queue - I removed Andrei)
+    std::cout << "After removing one student (pop): ";
+    display(stud);
+
+    return 0;
+}

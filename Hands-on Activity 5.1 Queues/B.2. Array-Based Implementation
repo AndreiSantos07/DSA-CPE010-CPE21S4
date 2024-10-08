@@ -1,0 +1,114 @@
+#include <iostream>
+using namespace std;
+
+class Queue {
+private:
+    int* arr;    
+    int front;        
+    int rear;        
+    int capacity;     
+    int size;         
+
+public:
+    // Constructor to show the initialization of the Queue
+    Queue(int cap) : capacity(cap), front(0), rear(-1), size(0) {
+        arr = new int[capacity];
+    }
+
+    // Destructor to free memory
+    ~Queue() {
+        delete[] arr;
+    }
+
+    // Create a void function to add an function
+    void enqueue(int element) {
+        if (isFull()) {
+            cout << "Queue is full! Cannot enqueue " << element << endl;
+            return;
+        }
+        rear = (rear + 1) % capacity;
+        arr[rear] = element;
+        size++;
+        cout << element << " added to the queue." << endl;
+    }
+
+    // Create another void functio to remove an element from the queue
+    void dequeue() {
+        if (isEmpty()) {
+            cout << "Queue is empty! Cannot dequeue." << endl;
+            return;
+        }
+        cout << arr[front] << " removed from the queue." << endl;
+        front = (front + 1) % capacity;
+        size--;
+    }
+
+    // Function to access the front element
+    int peek() const {
+        if (isEmpty()) {
+            cout << "Queue is empty!" << endl;
+            return -1; // Indicate that the queue is empty
+        }
+        return arr[front];
+    }
+
+    // Checking if the queue is empty
+    bool isEmpty() const {
+        return size == 0;
+    }
+
+    // Checking if the queue is full
+    bool isFull() const {
+        return size == capacity;
+    }
+
+    // check and return the current size of the queue
+    int getSize() const {
+        return size;
+    }
+
+    // Display all elements in the queue given
+    void display() const {
+        if (isEmpty()) {
+            cout << "Queue is empty!" << endl;
+            return;
+        }
+        cout << "Queue elements: ";
+        for (int i = 0; i < size; i++) {
+            cout << arr[(front + i) % capacity] << " ";
+        }
+        cout << endl;
+    }
+};
+
+int main() {
+    Queue q(5);  // Creating a queue consisting of a capacity of 5
+
+    // enqueue the 5 elements
+    q.enqueue(12);
+    q.enqueue(24);
+    q.enqueue(36);
+    q.enqueue(48);
+    q.enqueue(60);
+
+    // Peek or to check and display its size which is 5
+    cout << "Front element: " << q.peek() << endl;
+    cout << "Current size: " << q.getSize() << endl;
+    q.display();
+
+    // Now, dequeue the elements
+    q.dequeue();
+    q.dequeue();
+
+    // Again, peek again after dequeuing the elements
+    cout << "Front element after two dequeues: " << q.peek() << endl;
+    cout << "Current size after dequeues: " << q.getSize() << endl;
+    q.display();
+
+    // Enqueuing another elements 
+    q.enqueue(72);
+    cout << "Front element after adding 60: " << q.peek() << endl;
+    q.display();
+
+    return 0;
+}

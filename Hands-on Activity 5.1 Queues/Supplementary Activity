@@ -1,0 +1,80 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+// create a class for the print named as Job
+class Job 
+{
+public:
+    int ID;
+    string usrnm;
+    int pg;
+
+    // constructor for the three needs, Job ID, Name, and Number of Pages
+    Job(int id, const string& user, int p) 
+        : ID(id), usrnm(user), pg(p) {}
+};
+
+
+// create a class for the node
+class Node 
+{
+public:
+    Job job;
+    Node* next;
+
+    Node(const Job& j) : job(j), next(nullptr) {}
+};
+
+
+class prnt 
+{
+private:
+    Node* front; // create a pointer for the front
+    Node* rear;  // create a pointer for the rear or back
+
+public:
+    //initializaing an empty queue
+    prnt() : front(nullptr), rear(nullptr) {}
+
+    // another void function to create a new job that will be added to the queue
+    void addJob(const Job& job) 
+    {
+        Node* newNode = new Node(job);
+        if (rear) 
+        {
+            rear->next = newNode;
+        }
+        rear = newNode;
+        if (!front) 
+        {
+            front = newNode;
+        }
+    }
+
+    void Jobprocs() 
+    {
+        while (front) //creating a while loop for the queue
+        {
+            Job currentJob = front->job;
+            cout << "Job ID (Processing): " << currentJob.ID
+                      << "\nName: " << currentJob.usrnm
+                      << "\nNumber of pages: " << currentJob.pg << endl << endl;
+            Node* temp = front;
+            front = front->next;
+            delete temp; 
+        }
+        rear = nullptr; // always setting the rear as nullptr when or if the queue is empty
+    }
+};
+
+int main() 
+{
+    prnt prnt; //create the object
+    prnt.addJob(Job(1, "Andrei", 12)); // this will be printed as the first time.
+    prnt.addJob(Job(2, "Andrea", 24)); // this will be printed as the second time.
+    prnt.addJob(Job(3, "Andreu", 36)); // this will be printed as the last time.
+    prnt.Jobprocs();
+
+    return 0;
+}

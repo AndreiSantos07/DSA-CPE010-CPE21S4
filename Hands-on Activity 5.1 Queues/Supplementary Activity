@@ -27,7 +27,7 @@ public:
 };
 
 
-class prnt 
+class Printer 
 {
 private:
     Node* front; // create a pointer for the front
@@ -35,7 +35,7 @@ private:
 
 public:
     //initializaing an empty queue
-    prnt() : front(nullptr), rear(nullptr) {}
+    Printer() : front(nullptr), rear(nullptr) {}
 
     // another void function to create a new job that will be added to the queue
     void addJob(const Job& job) 
@@ -70,11 +70,11 @@ public:
 
 int main() 
 {
-    prnt prnt; //create the object
-    prnt.addJob(Job(1, "Andrei", 12)); // this will be printed as the first time.
-    prnt.addJob(Job(2, "Andrea", 24)); // this will be printed as the second time.
-    prnt.addJob(Job(3, "Andreu", 36)); // this will be printed as the last time.
-    prnt.Jobprocs();
+    Printer Printer; //create the object
+    Printer.addJob(Job(1, "Andrei", 12)); // this will be printed as the first time.
+    Printer.addJob(Job(2, "Andrea", 24)); // this will be printed as the second time.
+    Printer.addJob(Job(3, "Andreu", 36)); // this will be printed as the last time.
+    Printer.Jobprocs();
 
     return 0;
 }

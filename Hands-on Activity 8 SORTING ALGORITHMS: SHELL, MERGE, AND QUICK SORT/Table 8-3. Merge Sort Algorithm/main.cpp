@@ -10,25 +10,25 @@ int main() {
     int arr[size_of_Arr];
 
     srand(time(0)); 
-    for (int i = 0; i < size_of_Arr; ++i) 
+    for (int a = 0; a < size_of_Arr; ++a) 
     {
-        arr[i] = rand() % 100; 
+        arr[a] = rand() % 100; 
     }
 
  
     cout << "This is the raw and unsorted Array:\n";
-    for (int i = 0; i < size_of_Arr; ++i) 
+    for (int a = 0; a < size_of_Arr; ++a) 
     {
-        cout << arr[i] << " ";
+        cout << arr[a] << " ";
     }
     cout << endl;
 
     merge_sort(arr, 0, size_of_Arr - 1);
 
     cout << "Now, this is the sorted Array:\n";
-    for (int i = 0; i < size_of_Arr; ++i) 
+    for (int a = 0; a < size_of_Arr; ++a) 
     {
-        cout << arr[i] << " ";
+        cout << arr[a] << " ";
     }
     cout << endl;
 

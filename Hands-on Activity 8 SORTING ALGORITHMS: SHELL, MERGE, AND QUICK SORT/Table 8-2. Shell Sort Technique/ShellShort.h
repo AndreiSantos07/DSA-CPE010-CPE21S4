@@ -18,4 +18,4 @@ void shellSort(int arr[], int size)
     }
 }
 
-#endif // SHELLSORT_H
+#endif
